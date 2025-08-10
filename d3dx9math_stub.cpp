@@ -10,12 +10,17 @@
 #include "d3dx9math_stub.h"
 
 
+namespace {
+static constexpr HandleResult kS_OK                 = 0;            // S_OK.
+static constexpr HandleResult kD3DERR_INVALIDCALL   = -2005530516;  // D3DERR_INVALIDCALL
+} // namespace
+
 ///////////////////////////////////////////////////////////////////////////////
 // Float16
 ///////////////////////////////////////////////////////////////////////////////
 
 // Converts an array 32-bit floats to 16-bit floats
-D3DXFLOAT16* WRAP_API D3DXFloat32To16Array(D3DXFLOAT16 *pOut, const float *pIn, uint32_t n)
+D3DXFLOAT16* STUB_API D3DXFloat32To16Array(D3DXFLOAT16 *pOut, const float *pIn, uint32_t n)
 {
     assert(pOut != nullptr);
     assert(pIn  != nullptr);
@@ -27,7 +32,7 @@ D3DXFLOAT16* WRAP_API D3DXFloat32To16Array(D3DXFLOAT16 *pOut, const float *pIn, 
 }
 
 // Converts an array 16-bit floats to 32-bit floats
-float* WRAP_API D3DXFloat16To32Array(float *pOut, const D3DXFLOAT16 *pIn, uint32_t n)
+float* STUB_API D3DXFloat16To32Array(float *pOut, const D3DXFLOAT16 *pIn, uint32_t n)
 {
     assert(pOut != nullptr);
     assert(pIn  != nullptr);
@@ -42,7 +47,7 @@ float* WRAP_API D3DXFloat16To32Array(float *pOut, const D3DXFLOAT16 *pIn, uint32
 // D3DXVECTOR2
 ///////////////////////////////////////////////////////////////////////////////
 
-D3DXVECTOR2* WRAP_API D3DXVec2Normalize(D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV)
+D3DXVECTOR2* STUB_API D3DXVec2Normalize(D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV)
 {
     auto v   = DirectX::XMLoadFloat2(pV);
     auto ret = DirectX::XMVector2Normalize(v);
@@ -52,9 +57,15 @@ D3DXVECTOR2* WRAP_API D3DXVec2Normalize(D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV
 
 // Hermite interpolation between position V1, tangent T1 (when s == 0)
 // and position V2, tangent T2 (when s == 1).
-D3DXVECTOR2* WRAP_API D3DXVec2Hermite(
-    D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV1, const D3DXVECTOR2 *pT1,
-    const D3DXVECTOR2 *pV2, const D3DXVECTOR2 *pT2, float s )
+D3DXVECTOR2* STUB_API D3DXVec2Hermite
+(
+     D3DXVECTOR2*       pOut,
+    const D3DXVECTOR2*  pV1,
+    const D3DXVECTOR2*  pT1,
+    const D3DXVECTOR2*  pV2,
+    const D3DXVECTOR2*  pT2,
+    float               s
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -73,9 +84,15 @@ D3DXVECTOR2* WRAP_API D3DXVec2Hermite(
 }
 
 // CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
-D3DXVECTOR2* WRAP_API D3DXVec2CatmullRom(
-    D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV0, const D3DXVECTOR2 *pV1,
-    const D3DXVECTOR2 *pV2, const D3DXVECTOR2 *pV3, float s )
+D3DXVECTOR2* STUB_API D3DXVec2CatmullRom
+(
+    D3DXVECTOR2*        pOut,
+    const D3DXVECTOR2*  pV0,
+    const D3DXVECTOR2*  pV1,
+    const D3DXVECTOR2*  pV2,
+    const D3DXVECTOR2*  pV3,
+    float               s
+)
 {
     assert(pOut != nullptr);
     assert(pV0  != nullptr);
@@ -94,9 +111,15 @@ D3DXVECTOR2* WRAP_API D3DXVec2CatmullRom(
 }
 
 // Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
-D3DXVECTOR2* WRAP_API D3DXVec2BaryCentric(
-    D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV1, const D3DXVECTOR2 *pV2,
-    const D3DXVECTOR2 *pV3, float f, float g)
+D3DXVECTOR2* STUB_API D3DXVec2BaryCentric
+(
+    D3DXVECTOR2*        pOut,
+    const D3DXVECTOR2*  pV1,
+    const D3DXVECTOR2*  pV2,
+    const D3DXVECTOR2*  pV3,
+    float               f,
+    float               g
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -114,7 +137,12 @@ D3DXVECTOR2* WRAP_API D3DXVec2BaryCentric(
 }
 
 // Transform (x, y, 0, 1) by matrix.
-D3DXVECTOR4* WRAP_API D3DXVec2Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR2 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR4* STUB_API D3DXVec2Transform
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR2*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -128,7 +156,12 @@ D3DXVECTOR4* WRAP_API D3DXVec2Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR2 *pV
 }
 
 // Transform (x, y, 0, 1) by matrix, project result back into w=1.
-D3DXVECTOR2* WRAP_API D3DXVec2TransformCoord(D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR2* STUB_API D3DXVec2TransformCoord
+(
+    D3DXVECTOR2*        pOut,
+    const D3DXVECTOR2*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -142,7 +175,12 @@ D3DXVECTOR2* WRAP_API D3DXVec2TransformCoord(D3DXVECTOR2 *pOut, const D3DXVECTOR
 }
 
 // Transform (x, y, 0, 0) by matrix.
-D3DXVECTOR2* WRAP_API D3DXVec2TransformNormal(D3DXVECTOR2 *pOut, const D3DXVECTOR2 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR2* STUB_API D3DXVec2TransformNormal
+(
+    D3DXVECTOR2*        pOut,
+    const D3DXVECTOR2*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -156,8 +194,15 @@ D3DXVECTOR2* WRAP_API D3DXVec2TransformNormal(D3DXVECTOR2 *pOut, const D3DXVECTO
 }
      
 // Transform Array (x, y, 0, 1) by matrix.
-D3DXVECTOR4* WRAP_API D3DXVec2TransformArray(
-    D3DXVECTOR4 *pOut, uint32_t OutStride, const D3DXVECTOR2 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR4* STUB_API D3DXVec2TransformArray
+(
+    D3DXVECTOR4*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR2*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -169,8 +214,15 @@ D3DXVECTOR4* WRAP_API D3DXVec2TransformArray(
 }
 
 // Transform Array (x, y, 0, 1) by matrix, project result back into w=1.
-D3DXVECTOR2* WRAP_API D3DXVec2TransformCoordArray(
-    D3DXVECTOR2 *pOut, uint32_t OutStride, const D3DXVECTOR2 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR2* STUB_API D3DXVec2TransformCoordArray
+(
+    D3DXVECTOR2*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR2*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -182,8 +234,15 @@ D3DXVECTOR2* WRAP_API D3DXVec2TransformCoordArray(
 }
 
 // Transform Array (x, y, 0, 0) by matrix.
-D3DXVECTOR2* WRAP_API D3DXVec2TransformNormalArray(
-    D3DXVECTOR2 *pOut, uint32_t OutStride, const D3DXVECTOR2 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR2* STUB_API D3DXVec2TransformNormalArray
+(
+    D3DXVECTOR2*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR2*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -199,7 +258,7 @@ D3DXVECTOR2* WRAP_API D3DXVec2TransformNormalArray(
 // D3DXVECTOR3
 ///////////////////////////////////////////////////////////////////////////////
 
-D3DXVECTOR3* WRAP_API D3DXVec3Normalize(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV)
+D3DXVECTOR3* STUB_API D3DXVec3Normalize(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -212,9 +271,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3Normalize(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV
 
 // Hermite interpolation between position V1, tangent T1 (when s == 0)
 // and position V2, tangent T2 (when s == 1).
-D3DXVECTOR3* WRAP_API D3DXVec3Hermite(
-    D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pT1,
-    const D3DXVECTOR3 *pV2, const D3DXVECTOR3 *pT2, float s)
+D3DXVECTOR3* STUB_API D3DXVec3Hermite
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV1,
+    const D3DXVECTOR3*  pT1,
+    const D3DXVECTOR3*  pV2,
+    const D3DXVECTOR3*  pT2,
+    float               s
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -232,9 +297,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3Hermite(
 }
 
 // CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
-D3DXVECTOR3* WRAP_API D3DXVec3CatmullRom(
-    D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV0, const D3DXVECTOR3 *pV1,
-    const D3DXVECTOR3 *pV2, const D3DXVECTOR3 *pV3, float s)
+D3DXVECTOR3* STUB_API D3DXVec3CatmullRom
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV0,
+    const D3DXVECTOR3*  pV1,
+    const D3DXVECTOR3*  pV2,
+    const D3DXVECTOR3*  pV3,
+    float               s
+)
 {
     assert(pOut != nullptr);
     assert(pV0  != nullptr);
@@ -253,8 +324,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3CatmullRom(
 }
 
 // Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
-D3DXVECTOR3* WRAP_API D3DXVec3BaryCentric(
-    D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2, const D3DXVECTOR3 *pV3, float f, float g)
+D3DXVECTOR3* STUB_API D3DXVec3BaryCentric
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV1,
+    const D3DXVECTOR3*  pV2,
+    const D3DXVECTOR3*  pV3,
+    float               f,
+    float               g
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -272,7 +350,12 @@ D3DXVECTOR3* WRAP_API D3DXVec3BaryCentric(
 }
 
 // Transform (x, y, z, 1) by matrix.
-D3DXVECTOR4* WRAP_API D3DXVec3Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR3 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR4* STUB_API D3DXVec3Transform
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR3*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -286,7 +369,12 @@ D3DXVECTOR4* WRAP_API D3DXVec3Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR3 *pV
 }
 
 // Transform (x, y, z, 1) by matrix, project result back into w=1.
-D3DXVECTOR3* WRAP_API D3DXVec3TransformCoord(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR3* STUB_API D3DXVec3TransformCoord
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -302,7 +390,12 @@ D3DXVECTOR3* WRAP_API D3DXVec3TransformCoord(D3DXVECTOR3 *pOut, const D3DXVECTOR
 // Transform (x, y, z, 0) by matrix.  If you transforming a normal by a 
 // non-affine matrix, the matrix you pass to this function should be the 
 // transpose of the inverse of the matrix you would use to transform a coord.
-D3DXVECTOR3* WRAP_API D3DXVec3TransformNormal(D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR3* STUB_API D3DXVec3TransformNormal
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -316,8 +409,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3TransformNormal(D3DXVECTOR3 *pOut, const D3DXVECTO
 }
 
 // Transform Array (x, y, z, 1) by matrix. 
-D3DXVECTOR4* WRAP_API D3DXVec3TransformArray(
-    D3DXVECTOR4 *pOut, uint32_t OutStride, const D3DXVECTOR3 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR4* STUB_API D3DXVec3TransformArray
+(
+    D3DXVECTOR4*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR3*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -329,8 +429,15 @@ D3DXVECTOR4* WRAP_API D3DXVec3TransformArray(
 }
 
 // Transform Array (x, y, z, 1) by matrix, project result back into w=1.
-D3DXVECTOR3* WRAP_API D3DXVec3TransformCoordArray(
-    D3DXVECTOR3 *pOut, uint32_t OutStride, const D3DXVECTOR3 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR3* STUB_API D3DXVec3TransformCoordArray
+(
+    D3DXVECTOR3*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR3*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -344,8 +451,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3TransformCoordArray(
 // Transform (x, y, z, 0) by matrix.  If you transforming a normal by a 
 // non-affine matrix, the matrix you pass to this function should be the 
 // transpose of the inverse of the matrix you would use to transform a coord.
-D3DXVECTOR3* WRAP_API D3DXVec3TransformNormalArray(
-    D3DXVECTOR3 *pOut, uint32_t OutStride, const D3DXVECTOR3 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR3* STUB_API D3DXVec3TransformNormalArray
+(
+    D3DXVECTOR3*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR3*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -357,9 +471,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3TransformNormalArray(
 }
 
 // Project vector from object space into screen space
-D3DXVECTOR3* WRAP_API D3DXVec3Project(
-    D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, const D3DVIEWPORT9 *pViewport,
-    const D3DXMATRIX *pProjection, const D3DXMATRIX *pView, const D3DXMATRIX *pWorld)
+D3DXVECTOR3* STUB_API D3DXVec3Project
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV,
+    const D3DVIEWPORT9* pViewport,
+    const D3DXMATRIX*   pProjection,
+    const D3DXMATRIX*   pView,
+    const D3DXMATRIX*   pWorld
+)
 {
     assert(pOut        != nullptr);
     assert(pV          != nullptr);
@@ -383,9 +503,15 @@ D3DXVECTOR3* WRAP_API D3DXVec3Project(
 }
 
 // Project vector from screen space into object space
-D3DXVECTOR3* WRAP_API D3DXVec3Unproject(
-    D3DXVECTOR3 *pOut, const D3DXVECTOR3 *pV, const D3DVIEWPORT9 *pViewport,
-    const D3DXMATRIX *pProjection, const D3DXMATRIX *pView, const D3DXMATRIX *pWorld)
+D3DXVECTOR3* STUB_API D3DXVec3Unproject
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXVECTOR3*  pV,
+    const D3DVIEWPORT9* pViewport,
+    const D3DXMATRIX*   pProjection,
+    const D3DXMATRIX*   pView,
+    const D3DXMATRIX*   pWorld
+)
 {
     assert(pOut        != nullptr);
     assert(pV          != nullptr);
@@ -409,9 +535,18 @@ D3DXVECTOR3* WRAP_API D3DXVec3Unproject(
 }
       
 // Project vector Array from object space into screen space
-D3DXVECTOR3* WRAP_API D3DXVec3ProjectArray(
-    D3DXVECTOR3 *pOut, uint32_t OutStride,const D3DXVECTOR3 *pV, uint32_t VStride,const D3DVIEWPORT9 *pViewport,
-    const D3DXMATRIX *pProjection, const D3DXMATRIX *pView, const D3DXMATRIX *pWorld, uint32_t n)
+D3DXVECTOR3* STUB_API D3DXVec3ProjectArray
+(
+    D3DXVECTOR3*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR3*  pV,
+    uint32_t            VStride,
+    const D3DVIEWPORT9* pViewport,
+    const D3DXMATRIX*   pProjection,
+    const D3DXMATRIX*   pView,
+    const D3DXMATRIX*   pWorld,
+    uint32_t            n
+)
 {
     assert(pOut        != nullptr);
     assert(pV          != nullptr);
@@ -429,14 +564,24 @@ D3DXVECTOR3* WRAP_API D3DXVec3ProjectArray(
     auto view  = DirectX::XMLoadFloat4x4(pView);
     auto world = DirectX::XMLoadFloat4x4(pWorld);
 
-    DirectX::XMVector3ProjectStream(pOut, OutStride, pV, VStride, n, x, y, w, h, pViewport->MinZ, pViewport->MaxZ, proj, view, world);
+    DirectX::XMVector3ProjectStream(
+        pOut, OutStride, pV, VStride, n, x, y, w, h, pViewport->MinZ, pViewport->MaxZ, proj, view, world);
     return pOut;
 }
 
 // Project vector Array from screen space into object space
-D3DXVECTOR3* WRAP_API D3DXVec3UnprojectArray(
-    D3DXVECTOR3 *pOut, uint32_t OutStride, const D3DXVECTOR3 *pV, uint32_t VStride, const D3DVIEWPORT9 *pViewport,
-    const D3DXMATRIX *pProjection, const D3DXMATRIX *pView, const D3DXMATRIX *pWorld, uint32_t n)
+D3DXVECTOR3* STUB_API D3DXVec3UnprojectArray
+(
+    D3DXVECTOR3*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR3*  pV,
+    uint32_t            VStride,
+    const D3DVIEWPORT9* pViewport,
+    const D3DXMATRIX*   pProjection,
+    const D3DXMATRIX*   pView,
+    const D3DXMATRIX*   pWorld,
+    uint32_t            n
+)
 {
     assert(pOut        != nullptr);
     assert(pV          != nullptr);
@@ -454,7 +599,8 @@ D3DXVECTOR3* WRAP_API D3DXVec3UnprojectArray(
     auto view  = DirectX::XMLoadFloat4x4(pView);
     auto world = DirectX::XMLoadFloat4x4(pWorld);
 
-    DirectX::XMVector3UnprojectStream(pOut, OutStride, pV, VStride, n, x, y, w, h, pViewport->MinZ, pViewport->MaxZ, proj, view, world);
+    DirectX::XMVector3UnprojectStream(
+        pOut, OutStride, pV, VStride, n, x, y, w, h, pViewport->MinZ, pViewport->MaxZ, proj, view, world);
     return pOut;
 }
 
@@ -464,7 +610,13 @@ D3DXVECTOR3* WRAP_API D3DXVec3UnprojectArray(
 ///////////////////////////////////////////////////////////////////////////////
 
 // Cross-product in 4 dimensions.
-D3DXVECTOR4* WRAP_API D3DXVec4Cross(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV1, const D3DXVECTOR4 *pV2, const D3DXVECTOR4 *pV3)
+D3DXVECTOR4* STUB_API D3DXVec4Cross
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV1,
+    const D3DXVECTOR4*  pV2,
+    const D3DXVECTOR4*  pV3
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -479,7 +631,11 @@ D3DXVECTOR4* WRAP_API D3DXVec4Cross(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV1, c
     return pOut;
 }
 
-D3DXVECTOR4* WRAP_API D3DXVec4Normalize(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV)
+D3DXVECTOR4* STUB_API D3DXVec4Normalize
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -492,9 +648,15 @@ D3DXVECTOR4* WRAP_API D3DXVec4Normalize(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV
 
 // Hermite interpolation between position V1, tangent T1 (when s == 0)
 // and position V2, tangent T2 (when s == 1).
-D3DXVECTOR4* WRAP_API D3DXVec4Hermite(
-    D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV1, const D3DXVECTOR4 *pT1,
-    const D3DXVECTOR4 *pV2, const D3DXVECTOR4 *pT2, float s )
+D3DXVECTOR4* STUB_API D3DXVec4Hermite
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV1,
+    const D3DXVECTOR4*  pT1,
+    const D3DXVECTOR4*  pV2,
+    const D3DXVECTOR4*  pT2,
+    float               s 
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -513,8 +675,15 @@ D3DXVECTOR4* WRAP_API D3DXVec4Hermite(
 }
 
 // CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
-D3DXVECTOR4* WRAP_API D3DXVec4CatmullRom(
-    D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV0, const D3DXVECTOR4 *pV1, const D3DXVECTOR4 *pV2, const D3DXVECTOR4 *pV3, float s)
+D3DXVECTOR4* STUB_API D3DXVec4CatmullRom
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV0,
+    const D3DXVECTOR4*  pV1,
+    const D3DXVECTOR4*  pV2,
+    const D3DXVECTOR4*  pV3,
+    float               s
+)
 {
     assert(pOut != nullptr);
     assert(pV0  != nullptr);
@@ -533,8 +702,15 @@ D3DXVECTOR4* WRAP_API D3DXVec4CatmullRom(
 }
 
 // Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
-D3DXVECTOR4* WRAP_API D3DXVec4BaryCentric(
-    D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV1, const D3DXVECTOR4 *pV2, const D3DXVECTOR4 *pV3, float f, float g)
+D3DXVECTOR4* STUB_API D3DXVec4BaryCentric
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV1,
+    const D3DXVECTOR4*  pV2,
+    const D3DXVECTOR4*  pV3,
+    float               f,
+    float               g
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -552,7 +728,12 @@ D3DXVECTOR4* WRAP_API D3DXVec4BaryCentric(
 }
 
 // Transform vector by matrix.
-D3DXVECTOR4* WRAP_API D3DXVec4Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV, const D3DXMATRIX *pM)
+D3DXVECTOR4* STUB_API D3DXVec4Transform
+(
+    D3DXVECTOR4*        pOut,
+    const D3DXVECTOR4*  pV,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -566,8 +747,15 @@ D3DXVECTOR4* WRAP_API D3DXVec4Transform(D3DXVECTOR4 *pOut, const D3DXVECTOR4 *pV
 }
     
 // Transform vector array by matrix.
-D3DXVECTOR4* WRAP_API D3DXVec4TransformArray(
-    D3DXVECTOR4 *pOut, uint32_t OutStride, const D3DXVECTOR4 *pV, uint32_t VStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXVECTOR4* STUB_API D3DXVec4TransformArray
+(
+    D3DXVECTOR4*        pOut,
+    uint32_t            OutStride,
+    const D3DXVECTOR4*  pV,
+    uint32_t            VStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -583,7 +771,7 @@ D3DXVECTOR4* WRAP_API D3DXVec4TransformArray(
 // D3DXMATRIX
 ///////////////////////////////////////////////////////////////////////////////
 
-float WRAP_API D3DXMatrixDeterminant(const D3DXMATRIX *pM)
+float STUB_API D3DXMatrixDeterminant(const D3DXMATRIX *pM)
 {
     assert(pM != nullptr);
 
@@ -592,8 +780,13 @@ float WRAP_API D3DXMatrixDeterminant(const D3DXMATRIX *pM)
     return DirectX::XMVectorGetX(ret);
 }
 
-long WRAP_API D3DXMatrixDecompose(
-    D3DXVECTOR3 *pOutScale, D3DXQUATERNION *pOutRotation, D3DXVECTOR3 *pOutTranslation, const D3DXMATRIX *pM)
+HandleResult STUB_API D3DXMatrixDecompose
+(
+    D3DXVECTOR3*        pOutScale,
+    D3DXQUATERNION*     pOutRotation,
+    D3DXVECTOR3*        pOutTranslation,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOutScale       != nullptr);
     assert(pOutRotation    != nullptr);
@@ -607,17 +800,17 @@ long WRAP_API D3DXMatrixDecompose(
     auto ret = DirectX::XMMatrixDecompose(&scale, &rotate, &translation, mat);
     if (!ret)
     {
-        return -2005530516;// D3DERR_INVALIDCALL
+        return kD3DERR_INVALIDCALL;// D3DERR_INVALIDCALL
     }
 
     DirectX::XMStoreFloat3(pOutScale, scale);
     DirectX::XMStoreFloat4(pOutRotation, rotate);
     DirectX::XMStoreFloat3(pOutTranslation, translation);
 
-    return 0; // S_OK.
+    return kS_OK; // S_OK.
 }
 
-D3DXMATRIX* WRAP_API D3DXMatrixTranspose(D3DXMATRIX *pOut, const D3DXMATRIX *pM)
+D3DXMATRIX* STUB_API D3DXMatrixTranspose(D3DXMATRIX *pOut, const D3DXMATRIX *pM)
 {
     assert(pOut != nullptr);
     assert(pM   != nullptr);
@@ -630,7 +823,12 @@ D3DXMATRIX* WRAP_API D3DXMatrixTranspose(D3DXMATRIX *pOut, const D3DXMATRIX *pM)
 
 // Matrix multiplication.  The result represents the transformation M2
 // followed by the transformation M1.  (Out = M1 * M2)
-D3DXMATRIX* WRAP_API D3DXMatrixMultiply(D3DXMATRIX *pOut, const D3DXMATRIX *pM1, const D3DXMATRIX *pM2)
+D3DXMATRIX* STUB_API D3DXMatrixMultiply
+(
+    D3DXMATRIX*         pOut,
+    const D3DXMATRIX*   pM1,
+    const D3DXMATRIX*   pM2
+)
 {
     assert(pOut != nullptr);
     assert(pM1  != nullptr);
@@ -644,7 +842,12 @@ D3DXMATRIX* WRAP_API D3DXMatrixMultiply(D3DXMATRIX *pOut, const D3DXMATRIX *pM1,
 }
 
 // Matrix multiplication, followed by a transpose. (Out = T(M1 * M2))
-D3DXMATRIX* WRAP_API D3DXMatrixMultiplyTranspose(D3DXMATRIX *pOut, const D3DXMATRIX *pM1, const D3DXMATRIX *pM2)
+D3DXMATRIX* STUB_API D3DXMatrixMultiplyTranspose
+(
+    D3DXMATRIX*         pOut,
+    const D3DXMATRIX*   pM1,
+    const D3DXMATRIX*   pM2
+)
 {
     assert(pOut != nullptr);
     assert(pM1  != nullptr);
@@ -660,7 +863,12 @@ D3DXMATRIX* WRAP_API D3DXMatrixMultiplyTranspose(D3DXMATRIX *pOut, const D3DXMAT
 // Calculate inverse of matrix.  Inversion my fail, in which case NULL will
 // be returned.  The determinant of pM is also returned it pfDeterminant
 // is non-NULL.
-D3DXMATRIX* WRAP_API D3DXMatrixInverse(D3DXMATRIX *pOut, float *pDeterminant, const D3DXMATRIX *pM)
+D3DXMATRIX* STUB_API D3DXMatrixInverse
+(
+    D3DXMATRIX*         pOut,
+    float*              pDeterminant,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pM != nullptr);
@@ -677,7 +885,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixInverse(D3DXMATRIX *pOut, float *pDeterminant, co
 }
 
 // Build a matrix which scales by (sx, sy, sz)
-D3DXMATRIX* WRAP_API D3DXMatrixScaling(D3DXMATRIX *pOut, float sx, float sy, float sz)
+D3DXMATRIX* STUB_API D3DXMatrixScaling(D3DXMATRIX *pOut, float sx, float sy, float sz)
 {
     assert(pOut != nullptr);
 
@@ -687,7 +895,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixScaling(D3DXMATRIX *pOut, float sx, float sy, flo
 }
 
 // Build a matrix which translates by (x, y, z)
-D3DXMATRIX* WRAP_API D3DXMatrixTranslation(D3DXMATRIX *pOut, float x, float y, float z)
+D3DXMATRIX* STUB_API D3DXMatrixTranslation(D3DXMATRIX *pOut, float x, float y, float z)
 {
     assert(pOut != nullptr);
 
@@ -697,7 +905,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixTranslation(D3DXMATRIX *pOut, float x, float y, f
 }
 
 // Build a matrix which rotates around the X axis
-D3DXMATRIX* WRAP_API D3DXMatrixRotationX(D3DXMATRIX *pOut, float Angle)
+D3DXMATRIX* STUB_API D3DXMatrixRotationX(D3DXMATRIX *pOut, float Angle)
 {
     assert(pOut != nullptr);
 
@@ -707,7 +915,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationX(D3DXMATRIX *pOut, float Angle)
 }
 
 // Build a matrix which rotates around the Y axis
-D3DXMATRIX* WRAP_API D3DXMatrixRotationY(D3DXMATRIX *pOut, float Angle)
+D3DXMATRIX* STUB_API D3DXMatrixRotationY(D3DXMATRIX *pOut, float Angle)
 {
     assert(pOut != nullptr);
 
@@ -717,7 +925,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationY(D3DXMATRIX *pOut, float Angle)
 }
 
 // Build a matrix which rotates around the Z axis
-D3DXMATRIX* WRAP_API D3DXMatrixRotationZ(D3DXMATRIX *pOut, float Angle)
+D3DXMATRIX* STUB_API D3DXMatrixRotationZ(D3DXMATRIX *pOut, float Angle)
 {
     assert(pOut != nullptr);
 
@@ -727,7 +935,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationZ(D3DXMATRIX *pOut, float Angle)
 }
 
 // Build a matrix which rotates around an arbitrary axis
-D3DXMATRIX* WRAP_API D3DXMatrixRotationAxis(D3DXMATRIX *pOut, const D3DXVECTOR3 *pV, float Angle)
+D3DXMATRIX* STUB_API D3DXMatrixRotationAxis(D3DXMATRIX *pOut, const D3DXVECTOR3 *pV, float Angle)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -739,7 +947,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationAxis(D3DXMATRIX *pOut, const D3DXVECTOR3 
 }
 
 // Build a matrix from a quaternion
-D3DXMATRIX* WRAP_API D3DXMatrixRotationQuaternion(D3DXMATRIX *pOut, const D3DXQUATERNION *pQ)
+D3DXMATRIX* STUB_API D3DXMatrixRotationQuaternion(D3DXMATRIX *pOut, const D3DXQUATERNION *pQ)
 {
     assert(pOut != nullptr);
     assert(pQ   != nullptr);
@@ -752,7 +960,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationQuaternion(D3DXMATRIX *pOut, const D3DXQU
 
 // Yaw around the Y axis, a pitch around the X axis,
 // and a roll around the Z axis.
-D3DXMATRIX* WRAP_API D3DXMatrixRotationYawPitchRoll(D3DXMATRIX *pOut, float Yaw, float Pitch, float Roll)
+D3DXMATRIX* STUB_API D3DXMatrixRotationYawPitchRoll(D3DXMATRIX *pOut, float Yaw, float Pitch, float Roll)
 {
     assert(pOut != nullptr);
 
@@ -763,11 +971,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixRotationYawPitchRoll(D3DXMATRIX *pOut, float Yaw,
 
 // Build transformation matrix.  NULL arguments are treated as identity.
 // Mout = Msc-1 * Msr-1 * Ms * Msr * Msc * Mrc-1 * Mr * Mrc * Mt
-D3DXMATRIX* WRAP_API D3DXMatrixTransformation(
-    D3DXMATRIX *pOut, const D3DXVECTOR3 *pScalingCenter,
-    const D3DXQUATERNION *pScalingRotation, const D3DXVECTOR3 *pScaling,
-    const D3DXVECTOR3 *pRotationCenter, const D3DXQUATERNION *pRotation,
-    const D3DXVECTOR3 *pTranslation)
+D3DXMATRIX* STUB_API D3DXMatrixTransformation
+(
+    D3DXMATRIX*             pOut,
+    const D3DXVECTOR3*      pScalingCenter,
+    const D3DXQUATERNION*   pScalingRotation,
+    const D3DXVECTOR3*      pScaling,
+    const D3DXVECTOR3*      pRotationCenter,
+    const D3DXQUATERNION*   pRotation,
+    const D3DXVECTOR3*      pTranslation
+)
 {
     assert(pOut             != nullptr);
     assert(pScalingCenter   != nullptr);
@@ -791,11 +1004,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixTransformation(
 
 // Build 2D transformation matrix in XY plane.  NULL arguments are treated as identity.
 // Mout = Msc-1 * Msr-1 * Ms * Msr * Msc * Mrc-1 * Mr * Mrc * Mt
-D3DXMATRIX* WRAP_API D3DXMatrixTransformation2D(
-    D3DXMATRIX *pOut, const D3DXVECTOR2* pScalingCenter, 
-    float ScalingRotation, const D3DXVECTOR2* pScaling, 
-    const D3DXVECTOR2* pRotationCenter, float Rotation, 
-    const D3DXVECTOR2* pTranslation)
+D3DXMATRIX* STUB_API D3DXMatrixTransformation2D
+(
+    D3DXMATRIX*         pOut,
+    const D3DXVECTOR2*  pScalingCenter, 
+    float               ScalingRotation,
+    const D3DXVECTOR2*  pScaling, 
+    const D3DXVECTOR2*  pRotationCenter,
+    float               Rotation, 
+    const D3DXVECTOR2*  pTranslation
+)
 {
     assert(pOut            != nullptr);
     assert(pScalingCenter  != nullptr);
@@ -815,9 +1033,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixTransformation2D(
 
 // Build affine transformation matrix.  NULL arguments are treated as identity.
 // Mout = Ms * Mrc-1 * Mr * Mrc * Mt
-D3DXMATRIX* WRAP_API D3DXMatrixAffineTransformation(
-    D3DXMATRIX *pOut, float Scaling, const D3DXVECTOR3 *pRotationCenter,
-    const D3DXQUATERNION *pRotation, const D3DXVECTOR3 *pTranslation)
+D3DXMATRIX* STUB_API D3DXMatrixAffineTransformation
+(
+    D3DXMATRIX*             pOut,
+    float                   Scaling,
+    const D3DXVECTOR3*      pRotationCenter,
+    const D3DXQUATERNION*   pRotation,
+    const D3DXVECTOR3*      pTranslation
+)
 {
     assert(pOut            != nullptr);
     assert(pRotationCenter != nullptr);
@@ -836,9 +1059,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixAffineTransformation(
 
 // Build 2D affine transformation matrix in XY plane.  NULL arguments are treated as identity.
 // Mout = Ms * Mrc-1 * Mr * Mrc * Mt
-D3DXMATRIX* WRAP_API D3DXMatrixAffineTransformation2D(
-    D3DXMATRIX *pOut, float Scaling, const D3DXVECTOR2* pRotationCenter, 
-    float Rotation, const D3DXVECTOR2* pTranslation)
+D3DXMATRIX* STUB_API D3DXMatrixAffineTransformation2D
+(
+    D3DXMATRIX*         pOut,
+    float               Scaling,
+    const D3DXVECTOR2*  pRotationCenter, 
+    float               Rotation,
+    const D3DXVECTOR2*  pTranslation
+)
 {
     assert(pOut            != nullptr);
     assert(pRotationCenter != nullptr);
@@ -854,9 +1082,13 @@ D3DXMATRIX* WRAP_API D3DXMatrixAffineTransformation2D(
 }
 
 // Build a lookat matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixLookAtRH(
-    D3DXMATRIX *pOut, const D3DXVECTOR3 *pEye, const D3DXVECTOR3 *pAt,
-    const D3DXVECTOR3 *pUp )
+D3DXMATRIX* STUB_API D3DXMatrixLookAtRH
+(
+    D3DXMATRIX*         pOut,
+    const D3DXVECTOR3*  pEye,
+    const D3DXVECTOR3*  pAt,
+    const D3DXVECTOR3*  pUp
+)
 {
     assert(pOut != nullptr);
     assert(pEye != nullptr);
@@ -872,8 +1104,13 @@ D3DXMATRIX* WRAP_API D3DXMatrixLookAtRH(
 }
 
 // Build a lookat matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixLookAtLH(
-    D3DXMATRIX *pOut, const D3DXVECTOR3 *pEye, const D3DXVECTOR3 *pAt, const D3DXVECTOR3 *pUp)
+D3DXMATRIX* STUB_API D3DXMatrixLookAtLH
+(
+    D3DXMATRIX*         pOut,
+    const D3DXVECTOR3*  pEye,
+    const D3DXVECTOR3*  pAt,
+    const D3DXVECTOR3*  pUp
+)
 {
     assert(pOut != nullptr);
     assert(pEye != nullptr);
@@ -889,8 +1126,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixLookAtLH(
 }
 
 // Build a perspective projection matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveRH(
-    D3DXMATRIX *pOut, float w, float h, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveRH
+(
+    D3DXMATRIX* pOut,
+    float       w,
+    float       h,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -900,8 +1143,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveRH(
 }
 
 // Build a perspective projection matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveLH(
-    D3DXMATRIX *pOut, float w, float h, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveLH
+(
+    D3DXMATRIX* pOut,
+    float       w,
+    float       h,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -911,8 +1160,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveLH(
 }
 
 // Build a perspective projection matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveFovRH(
-    D3DXMATRIX *pOut, float fovy, float Aspect, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveFovRH
+(
+    D3DXMATRIX* pOut,
+    float       fovy,
+    float       Aspect,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -922,8 +1177,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveFovRH(
 }
 
 // Build a perspective projection matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveFovLH(
-    D3DXMATRIX *pOut, float fovy, float Aspect, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveFovLH
+(
+    D3DXMATRIX* pOut,
+    float       fovy,
+    float       Aspect,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -933,8 +1194,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveFovLH(
 }
 
 // Build a perspective projection matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveOffCenterRH(
-    D3DXMATRIX *pOut, float l, float r, float b, float t, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveOffCenterRH
+(
+    D3DXMATRIX* pOut,
+    float       l,
+    float       r,
+    float       b,
+    float       t,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -944,8 +1213,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveOffCenterRH(
 }
 
 // Build a perspective projection matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveOffCenterLH(
-    D3DXMATRIX *pOut, float l, float r, float b, float t, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixPerspectiveOffCenterLH
+(
+    D3DXMATRIX* pOut,
+    float       l,
+    float       r,
+    float       b,
+    float       t,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -955,8 +1232,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixPerspectiveOffCenterLH(
 }
 
 // Build an ortho projection matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixOrthoRH(
-    D3DXMATRIX *pOut, float w, float h, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixOrthoRH
+(
+    D3DXMATRIX* pOut,
+    float       w,
+    float       h,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -966,8 +1249,14 @@ D3DXMATRIX* WRAP_API D3DXMatrixOrthoRH(
 }
 
 // Build an ortho projection matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixOrthoLH(
-    D3DXMATRIX *pOut, float w, float h, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixOrthoLH
+(
+    D3DXMATRIX* pOut,
+    float       w,
+    float       h,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -977,8 +1266,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixOrthoLH(
 }
 
 // Build an ortho projection matrix. (right-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixOrthoOffCenterRH(
-    D3DXMATRIX *pOut, float l, float r, float b, float t, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixOrthoOffCenterRH
+(
+    D3DXMATRIX* pOut,
+    float       l,
+    float       r,
+    float       b,
+    float       t,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -988,8 +1285,16 @@ D3DXMATRIX* WRAP_API D3DXMatrixOrthoOffCenterRH(
 }
 
 // Build an ortho projection matrix. (left-handed)
-D3DXMATRIX* WRAP_API D3DXMatrixOrthoOffCenterLH(
-    D3DXMATRIX *pOut, float l, float r, float b, float t, float zn, float zf)
+D3DXMATRIX* STUB_API D3DXMatrixOrthoOffCenterLH
+(
+    D3DXMATRIX* pOut,
+    float       l,
+    float       r,
+    float       b,
+    float       t,
+    float       zn,
+    float       zf
+)
 {
     assert(pOut != nullptr);
 
@@ -1000,8 +1305,12 @@ D3DXMATRIX* WRAP_API D3DXMatrixOrthoOffCenterLH(
 
 // Build a matrix which flattens geometry into a plane, as if casting
 // a shadow from a light.
-D3DXMATRIX* WRAP_API D3DXMatrixShadow(
-    D3DXMATRIX *pOut, const D3DXVECTOR4 *pLight, const D3DXPLANE *pPlane)
+D3DXMATRIX* STUB_API D3DXMatrixShadow
+(
+    D3DXMATRIX*         pOut,
+    const D3DXVECTOR4*  pLight,
+    const D3DXPLANE*    pPlane
+)
 {
     assert(pOut  != nullptr);
     assert(pLight != nullptr);
@@ -1016,7 +1325,7 @@ D3DXMATRIX* WRAP_API D3DXMatrixShadow(
 }
 
 // Build a matrix which reflects the coordinate system about a plane
-D3DXMATRIX* WRAP_API D3DXMatrixReflect(D3DXMATRIX *pOut, const D3DXPLANE *pPlane)
+D3DXMATRIX* STUB_API D3DXMatrixReflect(D3DXMATRIX *pOut, const D3DXPLANE *pPlane)
 {
     assert(pOut   != nullptr);
     assert(pPlane != nullptr);
@@ -1033,8 +1342,12 @@ D3DXMATRIX* WRAP_API D3DXMatrixReflect(D3DXMATRIX *pOut, const D3DXPLANE *pPlane
 ///////////////////////////////////////////////////////////////////////////////
 
 // Compute a quaternin's axis and angle of rotation. Expects unit quaternions.
-void WRAP_API D3DXQuaternionToAxisAngle(
-    const D3DXQUATERNION *pQ, D3DXVECTOR3 *pAxis, float *pAngle)
+void STUB_API D3DXQuaternionToAxisAngle
+(
+    const D3DXQUATERNION*   pQ,
+    D3DXVECTOR3*            pAxis,
+    float*                  pAngle
+)
 {
     assert(pQ     != nullptr);
     assert(pAxis  != nullptr);
@@ -1049,7 +1362,7 @@ void WRAP_API D3DXQuaternionToAxisAngle(
 }
 
 // Build a quaternion from a rotation matrix.
-D3DXQUATERNION* WRAP_API D3DXQuaternionRotationMatrix(D3DXQUATERNION *pOut, const D3DXMATRIX *pM)
+D3DXQUATERNION* STUB_API D3DXQuaternionRotationMatrix(D3DXQUATERNION *pOut, const D3DXMATRIX *pM)
 {
     assert(pOut != nullptr);
     assert(pM   != nullptr);
@@ -1061,8 +1374,12 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionRotationMatrix(D3DXQUATERNION *pOut, cons
 }
 
 // Rotation about arbitrary axis.
-D3DXQUATERNION* WRAP_API D3DXQuaternionRotationAxis(
-    D3DXQUATERNION *pOut, const D3DXVECTOR3 *pV, float Angle)
+D3DXQUATERNION* STUB_API D3DXQuaternionRotationAxis
+(
+    D3DXQUATERNION*     pOut,
+    const D3DXVECTOR3*  pV,
+    float               Angle
+)
 {
     assert(pOut != nullptr);
     assert(pV   != nullptr);
@@ -1075,8 +1392,13 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionRotationAxis(
 
 // Yaw around the Y axis, a pitch around the X axis,
 // and a roll around the Z axis.
-D3DXQUATERNION* WRAP_API D3DXQuaternionRotationYawPitchRoll(
-    D3DXQUATERNION *pOut, float Yaw, float Pitch, float Roll)
+D3DXQUATERNION* STUB_API D3DXQuaternionRotationYawPitchRoll
+(
+    D3DXQUATERNION* pOut,
+    float           Yaw,
+    float           Pitch,
+    float           Roll
+)
 {
     assert(pOut != nullptr);
 
@@ -1087,8 +1409,12 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionRotationYawPitchRoll(
 
 // Quaternion multiplication.  The result represents the rotation Q2
 // followed by the rotation Q1.  (Out = Q2 * Q1)
-D3DXQUATERNION* WRAP_API D3DXQuaternionMultiply(
-    D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ1, const D3DXQUATERNION *pQ2)
+D3DXQUATERNION* STUB_API D3DXQuaternionMultiply
+(
+    D3DXQUATERNION*         pOut,
+    const D3DXQUATERNION*   pQ1,
+    const D3DXQUATERNION*   pQ2
+)
 {
     assert(pOut != nullptr);
     assert(pQ1  != nullptr);
@@ -1101,7 +1427,7 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionMultiply(
     return pOut;
 }
 
-D3DXQUATERNION* WRAP_API D3DXQuaternionNormalize(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
+D3DXQUATERNION* STUB_API D3DXQuaternionNormalize(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
 {
     assert(pOut != nullptr);
     assert(pQ   != nullptr);
@@ -1113,7 +1439,7 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionNormalize(D3DXQUATERNION *pOut, const D3D
 }
 
 // Conjugate and re-norm
-D3DXQUATERNION* WRAP_API D3DXQuaternionInverse(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
+D3DXQUATERNION* STUB_API D3DXQuaternionInverse(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
 {
     assert(pOut != nullptr);
     assert(pQ   != nullptr);
@@ -1126,7 +1452,7 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionInverse(D3DXQUATERNION *pOut, const D3DXQ
 
 // Expects unit quaternions.
 // if q = (cos(theta), sin(theta) * v); ln(q) = (0, theta * v)
-D3DXQUATERNION* WRAP_API D3DXQuaternionLn(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
+D3DXQUATERNION* STUB_API D3DXQuaternionLn(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
 {
     assert(pOut != nullptr);
     assert(pQ   != nullptr);
@@ -1139,7 +1465,7 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionLn(D3DXQUATERNION *pOut, const D3DXQUATER
 
 // Expects pure quaternions. (w == 0)  w is ignored in calculation.
 // if q = (0, theta * v); exp(q) = (cos(theta), sin(theta) * v)
-D3DXQUATERNION* WRAP_API D3DXQuaternionExp(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
+D3DXQUATERNION* STUB_API D3DXQuaternionExp(D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ)
 {
     assert(pOut != nullptr);
     assert(pQ   != nullptr);
@@ -1152,8 +1478,13 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionExp(D3DXQUATERNION *pOut, const D3DXQUATE
       
 // Spherical linear interpolation between Q1 (t == 0) and Q2 (t == 1).
 // Expects unit quaternions.
-D3DXQUATERNION* WRAP_API D3DXQuaternionSlerp(
-    D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ1, const D3DXQUATERNION *pQ2, float t)
+D3DXQUATERNION* STUB_API D3DXQuaternionSlerp
+(
+    D3DXQUATERNION*         pOut,
+    const D3DXQUATERNION*   pQ1,
+    const D3DXQUATERNION*   pQ2,
+    float                   t
+)
 {
     assert(pOut != nullptr);
     assert(pQ1  != nullptr);
@@ -1168,10 +1499,15 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionSlerp(
 
 // Spherical quadrangle interpolation.
 // Slerp(Slerp(Q1, C, t), Slerp(A, B, t), 2t(1-t))
-D3DXQUATERNION* WRAP_API D3DXQuaternionSquad(
-    D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ1,
-    const D3DXQUATERNION *pA, const D3DXQUATERNION *pB,
-    const D3DXQUATERNION *pC, float t)
+D3DXQUATERNION* STUB_API D3DXQuaternionSquad
+(
+    D3DXQUATERNION*         pOut,
+    const D3DXQUATERNION*   pQ1,
+    const D3DXQUATERNION*   pA,
+    const D3DXQUATERNION*   pB,
+    const D3DXQUATERNION*   pC,
+    float                   t
+)
 {
     assert(pOut != nullptr);
     assert(pQ1  != nullptr);
@@ -1191,10 +1527,16 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionSquad(
 // Setup control points for spherical quadrangle interpolation
 // from Q1 to Q2.  The control points are chosen in such a way 
 // to ensure the continuity of tangents with adjacent segments.
-void WRAP_API D3DXQuaternionSquadSetup(
-    D3DXQUATERNION *pAOut, D3DXQUATERNION *pBOut, D3DXQUATERNION *pCOut,
-    const D3DXQUATERNION *pQ0, const D3DXQUATERNION *pQ1, 
-    const D3DXQUATERNION *pQ2, const D3DXQUATERNION *pQ3)
+void STUB_API D3DXQuaternionSquadSetup
+(
+    D3DXQUATERNION*         pAOut,
+    D3DXQUATERNION*         pBOut,
+    D3DXQUATERNION*         pCOut,
+    const D3DXQUATERNION*   pQ0,
+    const D3DXQUATERNION*   pQ1, 
+    const D3DXQUATERNION*   pQ2,
+    const D3DXQUATERNION*   pQ3
+)
 {
     assert(pAOut != nullptr);
     assert(pBOut != nullptr);
@@ -1218,10 +1560,15 @@ void WRAP_API D3DXQuaternionSquadSetup(
 
 // Barycentric interpolation.
 // Slerp(Slerp(Q1, Q2, f+g), Slerp(Q1, Q3, f+g), g/(f+g))
-D3DXQUATERNION* WRAP_API D3DXQuaternionBaryCentric(
-    D3DXQUATERNION *pOut, const D3DXQUATERNION *pQ1,
-    const D3DXQUATERNION *pQ2, const D3DXQUATERNION *pQ3,
-    float f, float g)
+D3DXQUATERNION* STUB_API D3DXQuaternionBaryCentric
+(
+    D3DXQUATERNION*         pOut,
+    const D3DXQUATERNION*   pQ1,
+    const D3DXQUATERNION*   pQ2,
+    const D3DXQUATERNION*   pQ3,
+    float                   f,
+    float                   g
+)
 {
     assert(pOut != nullptr);
     assert(pQ1  != nullptr);
@@ -1242,7 +1589,7 @@ D3DXQUATERNION* WRAP_API D3DXQuaternionBaryCentric(
 ///////////////////////////////////////////////////////////////////////////////
 
 // Normalize plane (so that |a,b,c| == 1)
-D3DXPLANE* WRAP_API D3DXPlaneNormalize(D3DXPLANE *pOut, const D3DXPLANE *pP)
+D3DXPLANE* STUB_API D3DXPlaneNormalize(D3DXPLANE *pOut, const D3DXPLANE *pP)
 {
     assert(pOut != nullptr);
     assert(pP   != nullptr);
@@ -1255,8 +1602,13 @@ D3DXPLANE* WRAP_API D3DXPlaneNormalize(D3DXPLANE *pOut, const D3DXPLANE *pP)
 
 // Find the intersection between a plane and a line.  If the line is
 // parallel to the plane, NULL is returned.
-D3DXVECTOR3* WRAP_API D3DXPlaneIntersectLine(
-    D3DXVECTOR3 *pOut, const D3DXPLANE *pP, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2)
+D3DXVECTOR3* STUB_API D3DXPlaneIntersectLine
+(
+    D3DXVECTOR3*        pOut,
+    const D3DXPLANE*    pP,
+    const D3DXVECTOR3*  pV1,
+    const D3DXVECTOR3*  pV2
+)
 {
     assert(pOut != nullptr);
     assert(pP   != nullptr);
@@ -1272,8 +1624,12 @@ D3DXVECTOR3* WRAP_API D3DXPlaneIntersectLine(
 }
 
 // Construct a plane from a point and a normal
-D3DXPLANE* WRAP_API D3DXPlaneFromPointNormal(
-    D3DXPLANE *pOut, const D3DXVECTOR3 *pPoint, const D3DXVECTOR3 *pNormal)
+D3DXPLANE* STUB_API D3DXPlaneFromPointNormal
+(
+    D3DXPLANE*          pOut,
+    const D3DXVECTOR3*  pPoint,
+    const D3DXVECTOR3*  pNormal
+)
 {
     assert(pOut    != nullptr);
     assert(pPoint  != nullptr);
@@ -1287,8 +1643,13 @@ D3DXPLANE* WRAP_API D3DXPlaneFromPointNormal(
 }
 
 // Construct a plane from 3 points
-D3DXPLANE* WRAP_API D3DXPlaneFromPoints(
-    D3DXPLANE *pOut, const D3DXVECTOR3 *pV1, const D3DXVECTOR3 *pV2, const D3DXVECTOR3 *pV3)
+D3DXPLANE* STUB_API D3DXPlaneFromPoints
+(
+    D3DXPLANE*          pOut,
+    const D3DXVECTOR3*  pV1,
+    const D3DXVECTOR3*  pV2,
+    const D3DXVECTOR3*  pV3
+)
 {
     assert(pOut != nullptr);
     assert(pV1  != nullptr);
@@ -1305,7 +1666,12 @@ D3DXPLANE* WRAP_API D3DXPlaneFromPoints(
 
 // Transform a plane by a matrix.  The vector (a,b,c) must be normal.
 // M should be the inverse transpose of the transformation desired.
-D3DXPLANE* WRAP_API D3DXPlaneTransform(D3DXPLANE *pOut, const D3DXPLANE *pP, const D3DXMATRIX *pM)
+D3DXPLANE* STUB_API D3DXPlaneTransform
+(
+    D3DXPLANE*          pOut,
+    const D3DXPLANE*    pP,
+    const D3DXMATRIX*   pM
+)
 {
     assert(pOut != nullptr);
     assert(pP   != nullptr);
@@ -1320,15 +1686,23 @@ D3DXPLANE* WRAP_API D3DXPlaneTransform(D3DXPLANE *pOut, const D3DXPLANE *pP, con
     
 // Transform an array of planes by a matrix.  The vectors (a,b,c) must be normal.
 // M should be the inverse transpose of the transformation desired.
-D3DXPLANE* WRAP_API D3DXPlaneTransformArray(
-    D3DXPLANE *pOut, uint32_t OutStride, const D3DXPLANE *pP, uint32_t PStride, const D3DXMATRIX *pM, uint32_t n)
+D3DXPLANE* STUB_API D3DXPlaneTransformArray
+(
+    D3DXPLANE*          pOut,
+    uint32_t            OutStride,
+    const D3DXPLANE*    pP,
+    uint32_t            PStride,
+    const D3DXMATRIX*   pM,
+    uint32_t            n
+)
 {
     assert(pOut != nullptr);
     assert(pP   != nullptr);
     assert(pM   != nullptr);
     
     auto m   = DirectX::XMLoadFloat4x4(pM);
-    auto ret = DirectX::XMPlaneTransformStream((DirectX::XMFLOAT4*)pOut, OutStride, (DirectX::XMFLOAT4*)pP, PStride, n, m);
+    auto ret = DirectX::XMPlaneTransformStream(
+        (DirectX::XMFLOAT4*)pOut, OutStride, (DirectX::XMFLOAT4*)pP, PStride, n, m);
     return pOut;
 }
 
@@ -1339,7 +1713,7 @@ D3DXPLANE* WRAP_API D3DXPlaneTransformArray(
 
 // Interpolate r,g,b between desaturated color and color.
 // DesaturatedColor + s(Color - DesaturatedColor)
-D3DXCOLOR* WRAP_API D3DXColorAdjustSaturation(D3DXCOLOR *pOut, const D3DXCOLOR *pC, float s)
+D3DXCOLOR* STUB_API D3DXColorAdjustSaturation(D3DXCOLOR *pOut, const D3DXCOLOR *pC, float s)
 {
     assert(pOut != nullptr);
 
@@ -1350,7 +1724,7 @@ D3DXCOLOR* WRAP_API D3DXColorAdjustSaturation(D3DXCOLOR *pOut, const D3DXCOLOR *
 }
 
 // Interpolate r,g,b between 50% grey and color.  Grey + s(Color - Grey)
-D3DXCOLOR* WRAP_API D3DXColorAdjustContrast(D3DXCOLOR *pOut, const D3DXCOLOR *pC, float c)
+D3DXCOLOR* STUB_API D3DXColorAdjustContrast(D3DXCOLOR *pOut, const D3DXCOLOR *pC, float c)
 {
     assert(pOut != nullptr);
     assert(pC   != nullptr);
