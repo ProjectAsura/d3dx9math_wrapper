@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
-// File : d3dx9math_wrapper.h
-// Desc : Wrapper for d3dx9math
+// File : d3dx9math_stub.h
+// Desc : Stub for d3dx9math
 // Copyright(c) Project Asura. All right reserved.
 //-----------------------------------------------------------------------------
 #pragma once
