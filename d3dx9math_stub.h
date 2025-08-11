@@ -35,15 +35,39 @@
 #define STUB_API
 #endif//STUB_API
 
+#ifndef FALSE
+#define FALSE 0
+#endif//FALSE
+
+#ifndef TRUE
+#define TRUE 1
+#endif//TRUE
+
+#ifndef _HRESULT_DEFINED
+#define _HRESULT_DEFINED
+typedef int32_t HRESULT;
+#endif//_HRESULT_DEFINED
+
+#ifndef MAKE_HRESULT
+#define MAKE_HRESULT(sev,fac,code)  ((HRESULT)(((uint32_t)(sev)<<31) | ((uint32_t)(fac)<<16) | ((uint32_t)(code))) )
+#endif//MAKE_HRESULT
+
+#ifndef _FACD3D
+#define _FACD3D                  0x876   // Direct3D facility code
+#endif//_FACD3D
+
+#ifndef MAKE_D3DHRESULT
+#define MAKE_D3DHRESULT( code )  MAKE_HRESULT( 1, _FACD3D, code )
+#endif//MAKE_D3DHRESULT
+
 #define D3DX_PI     DirectX::XM_PI
 #define D3DX_1BYPI  DirectX::XM_1DIVPI
 
-using HandleResult = long;
 
 ///////////////////////////////////////////////////////////////////////////////
-// Viewport structure
+// StubViewport structure
 ///////////////////////////////////////////////////////////////////////////////
-struct Viewport
+struct StubViewport
 {
     uint32_t    X;
     uint32_t    Y;
@@ -95,8 +119,8 @@ typedef struct _D3DMATRIX
 #define D3DMATRIX_DEFINED
 #endif
 
-using D3DVIEWPORT9   = Viewport;
-using LPD3DVIEWPORT9 = Viewport*;
+using D3DVIEWPORT9   = StubViewport;
+using LPD3DVIEWPORT9 = StubViewport*;
 #endif//_d3d9TYPES_H_
 
 
@@ -1673,7 +1697,7 @@ inline bool D3DXMatrixIsIdentity(const D3DXMATRIX *pM)
 
 float STUB_API D3DXMatrixDeterminant(const D3DXMATRIX *pM);
 
-HandleResult STUB_API D3DXMatrixDecompose(
+HRESULT STUB_API D3DXMatrixDecompose(
     D3DXVECTOR3 *pOutScale, D3DXQUATERNION *pOutRotation, 
 	D3DXVECTOR3 *pOutTranslation, const D3DXMATRIX *pM );
 
@@ -1922,11 +1946,9 @@ D3DXQUATERNION* STUB_API D3DXQuaternionBaryCentric(
     const D3DXQUATERNION *pQ2, const D3DXQUATERNION *pQ3,
     float f, float g);
 
-//--------------------------
-// Plane
-//--------------------------
-
-// inline
+///////////////////////////////////////////////////////////////////////////////
+// D3DXPLANE methods.
+///////////////////////////////////////////////////////////////////////////////
 
 // ax + by + cz + dw
 inline float D3DXPlaneDot(const D3DXPLANE *pP, const D3DXVECTOR4 *pV)
@@ -1989,9 +2011,9 @@ D3DXPLANE* STUB_API D3DXPlaneTransform(
 D3DXPLANE* STUB_API D3DXPlaneTransformArray(
     D3DXPLANE *pOut, uint32_t OutStride, const D3DXPLANE *pP, uint32_t PStride, const D3DXMATRIX *pM, uint32_t n);
 
-//--------------------------
-// Color
-//--------------------------
+///////////////////////////////////////////////////////////////////////////////
+// D3DXCOLOR methods.
+///////////////////////////////////////////////////////////////////////////////
 
 // (1-r, 1-g, 1-b, a)
 inline D3DXCOLOR* D3DXColorNegative(D3DXCOLOR *pOut, const D3DXCOLOR *pC)
@@ -2074,3 +2096,70 @@ D3DXCOLOR* STUB_API D3DXColorAdjustSaturation(
 // Interpolate r,g,b between 50% grey and color.  Grey + s(Color - Grey)
 D3DXCOLOR* STUB_API D3DXColorAdjustContrast(
     D3DXCOLOR *pOut, const D3DXCOLOR *pC, float c);
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Misc Methods.
+///////////////////////////////////////////////////////////////////////////////
+
+// Calculate Fresnel term given the cosine of theta (likely obtained by
+// taking the dot of two normals), and the refraction index of the material.
+float STUB_API D3DXFresnelTerm(float CosTheta, float RefractionIndex); 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Spherical Harmonic Methods
+///////////////////////////////////////////////////////////////////////////////
+
+#define D3DXSH_MINORDER 2
+#define D3DXSH_MAXORDER 6
+
+float* STUB_API D3DXSHEvalDirection(
+    float *pOut, uint32_t Order, const D3DXVECTOR3 *pDir);
+
+float* STUB_API D3DXSHRotate(
+    float *pOut, uint32_t Order, const D3DXMATRIX *pMatrix, const float *pIn);
+
+float* STUB_API D3DXSHRotateZ(
+    float *pOut, uint32_t Order, float Angle, const float *pIn);
+
+float* STUB_API D3DXSHAdd(
+    float *pOut, uint32_t Order, const float *pA, const float *pB);
+
+float* STUB_API D3DXSHScale(
+    float *pOut, uint32_t Order, const float *pIn, const float Scale);
+
+float STUB_API D3DXSHDot(
+    uint32_t Order, const float *pA, const float *pB);
+
+float* STUB_API D3DXSHMultiply2(float *pOut, const float *pF, const float *pG);
+float* STUB_API D3DXSHMultiply3(float *pOut, const float *pF, const float *pG);
+float* STUB_API D3DXSHMultiply4(float *pOut, const float *pF, const float *pG);
+float* STUB_API D3DXSHMultiply5(float *pOut, const float *pF, const float *pG);
+float* STUB_API D3DXSHMultiply6(float *pOut, const float *pF, const float *pG);
+
+HRESULT STUB_API D3DXSHEvalDirectionalLight(
+    uint32_t Order, const D3DXVECTOR3 *pDir, 
+    float RIntensity, float GIntensity, float BIntensity,
+    float *pROut, float *pGOut, float *pBOut );
+
+HRESULT STUB_API D3DXSHEvalSphericalLight(
+    uint32_t Order, const D3DXVECTOR3 *pPos, float Radius,
+    float RIntensity, float GIntensity, float BIntensity,
+    float *pROut, float *pGOut, float *pBOut);
+
+HRESULT STUB_API D3DXSHEvalConeLight(
+    uint32_t Order, const D3DXVECTOR3 *pDir, float Radius,
+    float RIntensity, float GIntensity, float BIntensity,
+    float *pROut, float *pGOut, float *pBOut);
+
+HRESULT STUB_API D3DXSHEvalHemisphereLight(
+    uint32_t Order, const D3DXVECTOR3 *pDir, D3DXCOLOR Top, D3DXCOLOR Bottom,
+    float *pROut, float *pGOut, float *pBOut);
+
+#if 0
+// 非サポート.
+HRESULT WINAPI D3DXSHProjectCubeMap(
+    uint32_t uOrder, LPDIRECT3DCUBETEXTURE9 pCubeMap,
+    float* pROut, float* pGOut, float* pBOut );
+#endif
